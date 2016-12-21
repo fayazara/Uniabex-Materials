@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/cdlayout"
-    tools:context=".AddOrUpdatePersonActivity">
+    tools:context=".AddOrUpdateItem">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,6 +26,7 @@
                     android:layout_margin="8dp"
                     android:inputType="textCapSentences"
                     android:hint="@string/item_name_hint" />
+
                 <EditText
                     android:id="@+id/iPoNo"
                     android:layout_width="match_parent"
@@ -32,13 +34,15 @@
                     android:layout_margin="8dp"
                     android:inputType="textCapSentences"
                     android:hint="@string/po_no_hint" />
+
                 <EditText
                     android:id="@+id/iQty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:inputType="textCapSentences"
-                    android:hint="@string/qty_ordered_hint" />
+                    android:hint="@string/qty_ordered_hint"
+                    android:inputType="number"/>
+
                 <EditText
                     android:id="@+id/iSupplier"
                     android:layout_width="match_parent"
@@ -46,20 +50,22 @@
                     android:layout_margin="8dp"
                     android:inputType="textCapSentences"
                     android:hint="@string/supplier_hint" />
+
                 <EditText
                     android:id="@+id/iContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:inputType="textCapSentences"
+                    android:inputType="phone"
                     android:hint="@string/contact_hint" />
+
                 <EditText
                     android:id="@+id/iTransport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:inputType="textEmailAddress"
                     android:hint="@string/transporter_hint" />
+
                 <EditText
                     android:id="@+id/iLrno"
                     android:layout_width="match_parent"
@@ -67,13 +73,14 @@
                     android:layout_margin="8dp"
                     android:inputType="phone"
                     android:hint="@string/lr_no_hint" />
+
                 <EditText
                     android:id="@+id/iRemarks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:hint="@string/remarks_hint"
-                    android:inputType="number" />
+                    android:hint="@string/remarks_hint"/>
+
             </LinearLayout>
         </ScrollView>
 

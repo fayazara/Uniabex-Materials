@@ -44,4 +44,5 @@
     <string name="contact">Contact : </string>
     <string name="lr_num">LR # : </string>
     <string name="remarks">Remarks : </string>
+    <string name="settings">Settings</string>
 </resources>

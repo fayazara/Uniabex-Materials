@@ -32,8 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.settings));
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();

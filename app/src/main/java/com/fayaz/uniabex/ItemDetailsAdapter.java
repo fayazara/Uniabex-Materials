@@ -92,7 +92,7 @@ public class ItemDetailsAdapter extends BaseAdapter {
                 .setCancelable(true)
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainActivity.getInstance().deletePerson(position);
+                        MainActivity.getInstance().deleteItem(position);
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
