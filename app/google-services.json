@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "799797625075",
+    "firebase_url": "https://uniabex-a22fb.firebaseio.com",
+    "project_id": "uniabex-a22fb",
+    "storage_bucket": "uniabex-a22fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799797625075:android:21902f8159905015",
+        "android_client_info": {
+          "package_name": "com.fayaz.uniabex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799797625075-6n005a6ud43kdchi8tknha64nfmkb17f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQSULM8tmAy1Wl8eeekYbkR1B5VxKffs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
