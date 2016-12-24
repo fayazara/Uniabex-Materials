@@ -58,24 +58,12 @@ public class AddOrUpdateItem extends AppCompatActivity {
         bOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (iName.getText().toString().trim().equals("") || iPono.getText().toString().trim().equals("") ||
-                        iQty.getText().toString().trim().equals("") || iSupplier.getText().toString().trim().equals("") ||
-                        iContact.getText().toString().trim().equals("") || iTranport.getText().toString().trim().equals("")||
-                        iLrno.getText().toString().trim().equals("") || iRemarks.getText().toString().trim().equals("")) {
-                    final Snackbar snackBar = Snackbar.make(cl, "Please enter all the fields.", Snackbar.LENGTH_LONG);
-                    snackBar.setAction("CLOSE", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            snackBar.dismiss();
-                        }
-                    });
-                    snackBar.show();
-                }
-                else {
+
+
                     Item i = new Item();
                     i.setItem(iName.getText().toString());
                     i.setPonum(iPono.getText().toString());
-                    i.setQty(Integer.parseInt(iQty.getText().toString()));
+                    i.setQty(iQty.getText().toString());
                     i.setSupplier(iSupplier.getText().toString());
                     i.setContact(iContact.getText().toString());
                     i.setTransporter(iTranport.getText().toString());
@@ -86,7 +74,6 @@ public class AddOrUpdateItem extends AppCompatActivity {
                     else
                         MainActivity.getInstance().updateItemDetails(i, position);
                     finish();
-                }
             }
         });
 
@@ -110,7 +97,7 @@ public class AddOrUpdateItem extends AppCompatActivity {
                         iName.setText(person.getItem());
                         iPono.setText(person.getPonum());
                         iSupplier.setText(person.getSupplier());
-                        iQty.setText(String.valueOf(person.getQty()));
+                        iQty.setText(person.getQty());
                         iTranport.setText(person.getTransporter());
                         iContact.setText(person.getContact());
                         iLrno.setText(person.getLrnum());

@@ -14,19 +14,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
-
+            
             <TextView
                 android:id="@+id/ItemNametv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" 
                 android:text="Item : "
                 android:textSize="20sp"
                 android:layout_marginBottom="8dp"/>
-
+            
             <TextView
                 android:id="@+id/qtytv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" 
                 android:text="Qty : "
                 android:layout_marginBottom="8dp"/>
 

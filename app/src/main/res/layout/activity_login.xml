@@ -21,7 +21,7 @@
             android:layout_height="@dimen/logo_w_h"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/app_icon" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@color/colorAccent"
-            android:text="@string/btn_login"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:text="@string/btn_login"/>
 
         <Button
             android:id="@+id/btn_reset_password"

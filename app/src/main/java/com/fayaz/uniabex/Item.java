@@ -11,7 +11,7 @@ public class Item {
     private String item;
     private String ponum;
     private String contact;
-    private int qty;
+    private String qty;
     private String supplier;
     private String transporter;
     private String lrnum;
@@ -46,11 +46,11 @@ public class Item {
         this.contact = contact;
     }
 
-    public int getQty() {
+    public String getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
+    public void setQty(String qty) {
         this.qty = qty;
     }
 
