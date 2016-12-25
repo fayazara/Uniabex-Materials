@@ -4,8 +4,7 @@ package com.fayaz.uniabex;
  * Created by Fayaz on 21/12/2016.
  */
 
-import android.widget.BaseAdapter;
-
+        import android.widget.BaseAdapter;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
@@ -55,15 +54,15 @@ public class ItemDetailsAdapter extends BaseAdapter {
             holder = new Holder();
             holder.ItemName = (TextView) v.findViewById(R.id.ItemNametv);
             holder.qty = (TextView) v.findViewById(R.id.qtytv);
-            holder.EditItem = (ImageView) v.findViewById(R.id.EditItem);
-            holder.DeleteItem = (ImageView) v.findViewById(R.id.DeleteItem);
+            holder.EditItem = (Button) v.findViewById(R.id.EditItem);
+            holder.DeleteItem = (Button) v.findViewById(R.id.DeleteItem);
             v.setTag(holder);
         } else {
             holder = (Holder) v.getTag();
         }
 
-        holder.ItemName.setText(arrayListItem.get(position).getItem());
-        holder.qty.setText(arrayListItem.get(position).getQty());
+        holder.ItemName.setText("Item: " + arrayListItem.get(position).getItem());
+        holder.qty.setText("Qty: " + arrayListItem.get(position).getQty());
         holder.EditItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,7 +82,7 @@ public class ItemDetailsAdapter extends BaseAdapter {
 
     class Holder {
         TextView ItemName,qty;
-        ImageView DeleteItem, EditItem;
+        Button DeleteItem, EditItem;
     }
 
     public static void ShowConfirmDialog(Context context, final int position) {

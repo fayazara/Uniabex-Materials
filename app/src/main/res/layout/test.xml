@@ -1,69 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:id="@+id/cdlayout"
+    android:background="@color/colorPrimary"
+    tools:context=".AddOrUpdateItem">
 
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-            
-            <TextView
-                android:id="@+id/ItemNametv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:text="Item : "
-                android:textSize="20sp"
-                android:layout_marginBottom="8dp"/>
-            
-            <TextView
-                android:id="@+id/qtytv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:text="Qty : "
-                android:layout_marginBottom="8dp"/>
+            android:orientation="vertical">
 
-            <View
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="#c0c0c0"
-                android:layout_marginBottom="8dp"/>
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/item_name_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iPoNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/po_no_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iQty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/qty_ordered_hint"
+                    android:inputType="textCapSentences"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iSupplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/supplier_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="phone"
+                    android:hint="@string/contact_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iTransport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/transporter_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:id="@+id/iLrno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/lr_no_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+
+                <EditText
+                    android:id="@+id/iRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/remarks_hint"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@android:color/white" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
 
                 <Button
-                    android:id="@+id/EditItem"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bCancel"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Edit"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
+                    android:text="Cancel"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:textColor="@android:color/black"/>
 
                 <Button
-                    android:id="@+id/DeleteItem"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bOk"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Delete"
-                    android:textColor="@color/btn_logut_bg"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
+                    android:text="OK"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    android:textColor="@android:color/black"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </ScrollView>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
