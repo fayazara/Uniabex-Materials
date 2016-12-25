@@ -55,8 +55,8 @@ public class ItemDetailsAdapter extends BaseAdapter {
             holder = new Holder();
             holder.ItemName = (TextView) v.findViewById(R.id.ItemNametv);
             holder.qty = (TextView) v.findViewById(R.id.qtytv);
-            holder.EditItem = (Button) v.findViewById(R.id.EditItem);
-            holder.DeleteItem = (Button) v.findViewById(R.id.DeleteItem);
+            holder.EditItem = (ImageView) v.findViewById(R.id.EditItem);
+            holder.DeleteItem = (ImageView) v.findViewById(R.id.DeleteItem);
             v.setTag(holder);
         } else {
             holder = (Holder) v.getTag();
@@ -83,7 +83,7 @@ public class ItemDetailsAdapter extends BaseAdapter {
 
     class Holder {
         TextView ItemName,qty;
-        Button DeleteItem, EditItem;
+        ImageView DeleteItem, EditItem;
     }
 
     public static void ShowConfirmDialog(Context context, final int position) {
