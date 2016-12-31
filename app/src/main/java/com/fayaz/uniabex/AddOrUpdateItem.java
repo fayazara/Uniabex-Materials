@@ -41,6 +41,7 @@ public class AddOrUpdateItem extends AppCompatActivity {
         iTranport = (EditText) findViewById(R.id.iTransport);
         iLrno = (EditText) findViewById(R.id.iLrno);
         iRemarks = (EditText) findViewById(R.id.iRemarks);
+        String test = iRemarks.getText().toString();
 
         bOK = (Button) findViewById(R.id.bOk);
         bCancel = (Button) findViewById(R.id.bCancel);
@@ -59,7 +60,7 @@ public class AddOrUpdateItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                    String test = iRemarks.getText().toString();
                     Item i = new Item();
                     i.setItem(iName.getText().toString());
                     i.setPonum(iPono.getText().toString());
@@ -68,7 +69,13 @@ public class AddOrUpdateItem extends AppCompatActivity {
                     i.setContact(iContact.getText().toString());
                     i.setTransporter(iTranport.getText().toString());
                     i.setLrnum(iQty.getText().toString());
-                    i.setRemarks(iRemarks.getText().toString());
+                    if(test.equals("\n")){
+                        i.setRemarks(iRemarks.getText().toString());
+                    }
+                    else{
+                        i.setRemarks(iRemarks.getText().toString() + "\n");
+                    }
+
                     if (item == null)
                         MainActivity.getInstance().addItem(i);
                     else
@@ -93,6 +100,7 @@ public class AddOrUpdateItem extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
+                        String test = iRemarks.getText().toString();
                         Item person = dataSnapshot.getValue(Item.class);
                         iName.setText(person.getItem());
                         iPono.setText(person.getPonum());
@@ -101,7 +109,12 @@ public class AddOrUpdateItem extends AppCompatActivity {
                         iTranport.setText(person.getTransporter());
                         iContact.setText(person.getContact());
                         iLrno.setText(person.getLrnum());
-                        iRemarks.setText(person.getRemarks());
+                        if(test.equals("\n")){
+                            iRemarks.setText(person.getRemarks());
+                        }
+                        else{
+                            iRemarks.setText(person.getRemarks() + "\n");
+                        }
                     }
 
                     @Override

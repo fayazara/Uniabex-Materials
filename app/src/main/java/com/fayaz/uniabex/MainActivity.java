@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<Item> arrayListItem = new ArrayList<>();
     private ItemDetailsAdapter itemDetailsAdapter;
     private ArrayList<String> keysArray;
+    public String recEmail = "uniabexappupdates@gmail.com";
+    public String mailSubject ="";
+    public String mailBody="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +139,23 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(key, postValues);
         mDatabase.updateChildren(childUpdates);
+
+        mailSubject ="New Item " + model.getItem().toString() + " is added to Materials app.";
+        mailBody = "Item : " + model.getItem().toString() + "\n" +
+                "PO # : " + model.getPonum().toString() + "\n" +
+                "Qty : " + model.getQty().toString() + "\n" +
+                "Supplier : " + model.getSupplier().toString() + "\n" +
+                "Contact : " + model.getContact().toString() + "\n" +
+                "Transport : " + model.getTransporter().toString() + "\n" +
+                "LR # : " + model.getLrnum().toString() + "\n" +
+                "Remarks : " + model.getRemarks().toString();
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(this, recEmail, mailSubject, mailBody);
+
+        //Executing sendmail to send email
+        sm.execute();
+
     }
 
     public void deleteItem(int position) {
@@ -155,6 +175,22 @@ public class MainActivity extends AppCompatActivity {
         item.setLrnum(model.getLrnum());
         item.setRemarks(model.getRemarks());
         mDatabase.child(clickedKey).setValue(item);
+
+        mailSubject = "Item " + model.getItem().toString() + " is Updated to Materials app.";
+        mailBody = "Item : " + model.getItem().toString() + "\n" +
+                "PO # : " + model.getPonum().toString() + "\n" +
+                "Qty : " + model.getQty().toString() + "\n" +
+                "Supplier : " + model.getSupplier().toString() + "\n" +
+                "Contact : " + model.getContact().toString() + "\n" +
+                "Transport : " + model.getTransporter().toString() + "\n" +
+                "LR # : " + model.getLrnum().toString() + "\n" +
+                "Remarks : " + model.getRemarks().toString();
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(this, recEmail, mailSubject, mailBody);
+
+        //Executing sendmail to send email
+        sm.execute();
     }
 
     ChildEventListener childEventListener = new ChildEventListener() {
