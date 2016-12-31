@@ -5,5 +5,5 @@ package com.fayaz.uniabex;
  */
 public class Config {
     public static final String EMAIL ="uniabexapp@gmail.com";
-    public static final String PASSWORD ="fayaz32929";
+    public static final String PASSWORD ="**********";
 }
