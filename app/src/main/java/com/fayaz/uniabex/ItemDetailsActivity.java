@@ -42,6 +42,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         callSupplier = (ImageView) findViewById(R.id.call);
         context = getApplicationContext();
@@ -110,6 +112,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                         tvItemDetailTransporter.setText(itemDetailsModel.getTransporter());
                         tvItemDetailLrno.setText(itemDetailsModel.getLrnum());
                         tvItemDetailRemarks.setText(itemDetailsModel.getRemarks());
+                        getSupportActionBar().setTitle(tvItemDetailName.getText().toString());
                     }
 
                     @Override
@@ -169,6 +172,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
         android:visibility="invisible"
-        android:layout_gravity="center|center_vertical"/>
+        android:background="@color/colorPrimaryDark"
+        android:layout_gravity="center"/>
 
     <ListView
         android:id="@+id/ItemList"
@@ -27,4 +28,5 @@
         android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="0dp"/>
+
 </LinearLayout>
