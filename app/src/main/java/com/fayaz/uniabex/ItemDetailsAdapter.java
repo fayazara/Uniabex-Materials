@@ -12,10 +12,10 @@ package com.fayaz.uniabex;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.BaseAdapter;
         import android.widget.Button;
-        import android.widget.ImageView;
         import android.widget.TextView;
+
+        import com.anton46.stepsview.StepsView;
 
         import java.util.ArrayList;
 
@@ -23,6 +23,8 @@ public class ItemDetailsAdapter extends BaseAdapter {
     private ArrayList<Item> arrayListItem;
     private Context context;
     private LayoutInflater inflater;
+
+    public String curStatus;
 
     public ItemDetailsAdapter(Context context, ArrayList<Item> arrayListItem) {
         this.context = context;
@@ -47,6 +49,8 @@ public class ItemDetailsAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+        final String[] labels = {"Enq", "Qtn", "PO", "Dspd", "Rcvd"};
         View v = convertView;
         Holder holder;
         if (v == null) {
@@ -56,6 +60,18 @@ public class ItemDetailsAdapter extends BaseAdapter {
             holder.qty = (TextView) v.findViewById(R.id.qtytv);
             holder.EditItem = (Button) v.findViewById(R.id.EditItem);
             holder.DeleteItem = (Button) v.findViewById(R.id.DeleteItem);
+            holder.mStepsView = (StepsView) v.findViewById(R.id.stepsView);
+
+            curStatus = arrayListItem.get(position).getStatus();
+            int n = Integer.parseInt(curStatus);
+
+            holder.mStepsView.setLabels(labels)
+                    .setBarColorIndicator(context.getResources().getColor(R.color.material_blue_grey_800))
+                    .setProgressColorIndicator(context.getResources().getColor(R.color.colorPrimary))
+                    .setLabelColorIndicator(context.getResources().getColor(R.color.colorPrimaryDark))
+                    .setCompletedPosition(n)
+                    .drawView();
+
             v.setTag(holder);
         } else {
             holder = (Holder) v.getTag();
@@ -83,6 +99,7 @@ public class ItemDetailsAdapter extends BaseAdapter {
     class Holder {
         TextView ItemName,qty;
         Button DeleteItem, EditItem;
+        StepsView mStepsView;
     }
 
     public static void ShowConfirmDialog(Context context, final int position) {

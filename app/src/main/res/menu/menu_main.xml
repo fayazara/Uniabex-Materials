@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_settings_white_18dp"
+        android:icon="@mipmap/ic_settings_white_24dp"
         android:title="Settings"
         app:showAsAction="always" />
 </menu>

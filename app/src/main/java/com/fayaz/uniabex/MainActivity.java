@@ -3,7 +3,9 @@ package com.fayaz.uniabex;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     public String recEmail = "uniabexappupdates@gmail.com";
     public String mailSubject ="";
     public String mailBody="";
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
+
+
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.addChildEventListener(childEventListener);
         mainActivity = this;
@@ -55,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         lvItem = (ListView) findViewById(R.id.ItemList);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
+
+
 
         keysArray = new ArrayList<>();
 
@@ -67,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateView();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
         lvItem.setAdapter(itemDetailsAdapter);
 
         new Wait().execute();
+
+
     }
+
 
     private class Wait extends AsyncTask<Void, Void, Boolean> {
         @Override
@@ -132,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         item.setTransporter(model.getTransporter());
         item.setLrnum(model.getLrnum());
         item.setRemarks(model.getRemarks());
+        item.setStatus(model.getStatus());
 
         String key = mDatabase.child("Items").push().getKey();
         Map<String, Object> postValues = item.toMap();
@@ -174,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
         item.setTransporter(model.getTransporter());
         item.setLrnum(model.getLrnum());
         item.setRemarks(model.getRemarks());
+        item.setStatus(model.getStatus());
         mDatabase.child(clickedKey).setValue(item);
 
         mailSubject = "Item " + model.getItem().toString() + " is Updated to Materials app.";
@@ -263,5 +289,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.fayaz.uniabex;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -7,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -16,14 +19,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class AddOrUpdateItem extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelectedListener {
 
     Button bOK,bCancel;
     Item item;
     int position;
     EditText iName,iPono,iQty,iSupplier,iContact,iTranport,iLrno,iRemarks;
     CoordinatorLayout cl;
+    public Spinner spinner;
+    String status, selectedStatus;
+    public ArrayAdapter<String> dataAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +49,8 @@ public class AddOrUpdateItem extends AppCompatActivity {
 
         cl = (CoordinatorLayout) findViewById(R.id.cdlayout);
 
+        final Intent intent = new Intent(AddOrUpdateItem.this, MainActivity.class);
+
          iName= (EditText) findViewById(R.id.iName);
         iPono = (EditText) findViewById(R.id.iPoNo);
         iQty = (EditText) findViewById(R.id.iQty);
@@ -44,7 +59,29 @@ public class AddOrUpdateItem extends AppCompatActivity {
         iTranport = (EditText) findViewById(R.id.iTransport);
         iLrno = (EditText) findViewById(R.id.iLrno);
         iRemarks = (EditText) findViewById(R.id.iRemarks);
-        String test = iRemarks.getText().toString();
+
+        // Spinner element
+        spinner = (Spinner) findViewById(R.id.status);
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Enquiry");
+        categories.add("Quotation");
+        categories.add("Po Rel");
+        categories.add("Dispatched");
+        categories.add("Received");
+
+        // Creating adapter for spinner
+        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
 
         bOK = (Button) findViewById(R.id.bOk);
         bCancel = (Button) findViewById(R.id.bCancel);
@@ -72,6 +109,8 @@ public class AddOrUpdateItem extends AppCompatActivity {
                     i.setContact(iContact.getText().toString());
                     i.setTransporter(iTranport.getText().toString());
                     i.setLrnum(iQty.getText().toString());
+                    i.setStatus(selectedStatus);
+
                     if(test.equals("\n")){
                         i.setRemarks(iRemarks.getText().toString());
                     }
@@ -83,7 +122,8 @@ public class AddOrUpdateItem extends AppCompatActivity {
                         MainActivity.getInstance().addItem(i);
                     else
                         MainActivity.getInstance().updateItemDetails(i, position);
-                    finish();
+                        finish();
+
             }
         });
 
@@ -112,6 +152,8 @@ public class AddOrUpdateItem extends AppCompatActivity {
                         iTranport.setText(person.getTransporter());
                         iContact.setText(person.getContact());
                         iLrno.setText(person.getLrnum());
+                        spinner.setSelection(dataAdapter.getPosition(person.getStatus()));
+
                         if(test.equals("\n")){
                             iRemarks.setText(person.getRemarks());
                         }
@@ -134,5 +176,18 @@ public class AddOrUpdateItem extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        status = parent.getItemAtPosition(position).toString();
+
+        selectedStatus = Integer.toString(position);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

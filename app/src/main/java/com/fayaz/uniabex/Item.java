@@ -16,6 +16,7 @@ public class Item {
     private String transporter;
     private String lrnum;
     private String remarks;
+    private String status;
 
 
     public Item(){
@@ -86,6 +87,14 @@ public class Item {
         this.remarks = remarks;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("item", item);
@@ -96,6 +105,7 @@ public class Item {
         result.put("transporter", transporter);
         result.put("lrnum", lrnum);
         result.put("remarks", remarks);
+        result.put("status", status);
         return result;
     }
 }
