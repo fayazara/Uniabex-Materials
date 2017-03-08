@@ -1,16 +1,13 @@
 package com.fayaz.uniabex;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.MailTo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -34,6 +32,14 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        try{
+
+        }
+
+        catch (Exception e){
+            FirebaseCrash.report(e);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -50,9 +56,14 @@ public class ItemDetailsActivity extends AppCompatActivity {
         tvItemDetailTransporter = (TextView) findViewById(R.id.tvItemDetailsTransport);
         tvItemDetailLrno = (TextView) findViewById(R.id.tvItemDetailsLrno);
         tvItemDetailRemarks = (TextView) findViewById(R.id.tvItemDetailsRemarks);
+        try{
+            position = getIntent().getIntExtra("Position", -1);
+            searchPerson(position);
+        }
+        catch (Exception e){
+            FirebaseCrash.report(e);
+        }
 
-        position = getIntent().getIntExtra("Position", -1);
-        searchPerson(position);
     }
 
     public static void ShowConfirmDialog(Context context, final int position) {

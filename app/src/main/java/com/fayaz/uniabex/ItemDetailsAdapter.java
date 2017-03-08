@@ -15,11 +15,12 @@ package com.fayaz.uniabex;
         import android.widget.Button;
         import android.widget.TextView;
 
-        import com.anton46.stepsview.StepsView;
+        import com.google.firebase.crash.FirebaseCrash;
 
         import java.util.ArrayList;
 
 public class ItemDetailsAdapter extends BaseAdapter {
+
     private ArrayList<Item> arrayListItem;
     private Context context;
     private LayoutInflater inflater;
@@ -50,7 +51,6 @@ public class ItemDetailsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        final String[] labels = {"Enq", "Qtn", "PO", "Dspd", "Rcvd"};
         View v = convertView;
         Holder holder;
         if (v == null) {
@@ -58,19 +58,9 @@ public class ItemDetailsAdapter extends BaseAdapter {
             holder = new Holder();
             holder.ItemName = (TextView) v.findViewById(R.id.ItemNametv);
             holder.qty = (TextView) v.findViewById(R.id.qtytv);
+            holder.curStatus = (TextView) v.findViewById(R.id.stattv);
             holder.EditItem = (Button) v.findViewById(R.id.EditItem);
             holder.DeleteItem = (Button) v.findViewById(R.id.DeleteItem);
-            holder.mStepsView = (StepsView) v.findViewById(R.id.stepsView);
-
-            curStatus = arrayListItem.get(position).getStatus();
-            int n = Integer.parseInt(curStatus);
-
-            holder.mStepsView.setLabels(labels)
-                    .setBarColorIndicator(context.getResources().getColor(R.color.material_blue_grey_800))
-                    .setProgressColorIndicator(context.getResources().getColor(R.color.colorPrimary))
-                    .setLabelColorIndicator(context.getResources().getColor(R.color.colorPrimaryDark))
-                    .setCompletedPosition(n)
-                    .drawView();
 
             v.setTag(holder);
         } else {
@@ -79,6 +69,7 @@ public class ItemDetailsAdapter extends BaseAdapter {
 
         holder.ItemName.setText("Item: " + arrayListItem.get(position).getItem());
         holder.qty.setText("Qty: " + arrayListItem.get(position).getQty());
+        holder.curStatus.setText("Status: " + arrayListItem.get(position).getStatus());
         holder.EditItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,9 +88,8 @@ public class ItemDetailsAdapter extends BaseAdapter {
     }
 
     class Holder {
-        TextView ItemName,qty;
+        TextView ItemName,qty, curStatus;
         Button DeleteItem, EditItem;
-        StepsView mStepsView;
     }
 
     public static void ShowConfirmDialog(Context context, final int position) {

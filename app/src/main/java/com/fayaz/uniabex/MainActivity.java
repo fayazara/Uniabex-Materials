@@ -1,11 +1,15 @@
 package com.fayaz.uniabex;
 
+
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,11 +17,14 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,75 +43,82 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FloatingActionButton fab;
     private ProgressBar progressBar;
+    private ImageView noCon;
+    private TextView txtView;
     private ListView lvItem;
+    private CoordinatorLayout coordinatorLayout;
     private static MainActivity mainActivity;
-    private static ArrayList<Item> arrayListItem = new ArrayList<>();
+    private ArrayList<Item> arrayListItem = new ArrayList<>();
     private ItemDetailsAdapter itemDetailsAdapter;
     private ArrayList<String> keysArray;
     public String recEmail = "uniabexappupdates@gmail.com";
     public String mailSubject ="";
     public String mailBody="";
-    SwipeRefreshLayout mSwipeRefreshLayout;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        setSupportActionBar(toolbar);
+
+        try{
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(R.string.app_name);
+            setSupportActionBar(toolbar);
 
 
 
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.addChildEventListener(childEventListener);
-        mainActivity = this;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.addChildEventListener(childEventListener);
+            mainActivity = this;
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        lvItem = (ListView) findViewById(R.id.ItemList);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefresh);
-
-
-
-        keysArray = new ArrayList<>();
-
-        lvItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, ItemDetailsActivity.class);
-                intent.putExtra("Position", position);
-                startActivity(intent);
-            }
-        });
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateView();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            txtView = (TextView) findViewById(R.id.txtLoading);
+            noCon = (ImageView) findViewById(R.id.noCon);
+            coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            fab = (FloatingActionButton) findViewById(R.id.fab);
+            lvItem = (ListView) findViewById(R.id.ItemList);
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddOrUpdateItem.class);
-                intent.putExtra("Position", -1);
-                startActivity(intent);
-            }
-        });
 
-        itemDetailsAdapter = new ItemDetailsAdapter(MainActivity.this, arrayListItem);
-        lvItem.setAdapter(itemDetailsAdapter);
+            keysArray = new ArrayList<>();
 
-        new Wait().execute();
+            lvItem.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(MainActivity.this, ItemDetailsActivity.class);
+                    intent.putExtra("Position", position);
+                    startActivity(intent);
+                }
+            });
 
 
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseCrash.log("FAB Button clicked!");
+                    Intent intent = new Intent(MainActivity.this, AddOrUpdateItem.class);
+                    intent.putExtra("Position", -1);
+                    startActivity(intent);
+                }
+            });
+
+            itemDetailsAdapter = new ItemDetailsAdapter(MainActivity.this, arrayListItem);
+            lvItem.setAdapter(itemDetailsAdapter);
+
+            new Wait().execute();
+
+
+
+
+        }
+
+        catch (Exception e){
+            FirebaseCrash.report(e);
+        }
     }
 
 
@@ -113,13 +127,14 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
+            txtView.setVisibility(View.VISIBLE);
             lvItem.setVisibility(View.GONE);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             }
             catch (InterruptedException ie) {
                 Log.d(TAG,ie.toString());
@@ -224,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             lvItem.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
+            txtView.setVisibility(View.VISIBLE);
             Log.d(TAG, dataSnapshot.getKey() + ":" + dataSnapshot.getValue().toString());
             Item item = dataSnapshot.getValue(Item.class);
             arrayListItem.add(item);
@@ -262,11 +278,45 @@ public class MainActivity extends AppCompatActivity {
         mDatabase.removeEventListener(childEventListener);
     }
 
+
     public void updateView() {
-        itemDetailsAdapter.notifyDataSetChanged();
-        lvItem.invalidate();
-        progressBar.setVisibility(View.GONE);
-        lvItem.setVisibility(View.VISIBLE);
+        if(isNetworkStatusAvialable (getApplicationContext())) {
+            itemDetailsAdapter.notifyDataSetChanged();
+            lvItem.invalidate();
+            progressBar.setVisibility(View.GONE);
+            txtView.setVisibility(View.GONE);
+            noCon.setVisibility(View.GONE);
+            lvItem.setVisibility(View.VISIBLE);
+
+        } else {
+            noCon.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+            txtView.setVisibility(View.GONE);
+
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, "No Internet Connection", Snackbar.LENGTH_LONG)
+                    .setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            updateView();
+                        }
+                    });
+
+            snackbar.show();
+        }
+
+    }
+
+    public static boolean isNetworkStatusAvialable (Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null)
+        {
+            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
+            if(netInfos != null)
+                if(netInfos.isConnected())
+                    return true;
+        }
+        return false;
     }
 
     @Override
@@ -281,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

@@ -25,7 +25,11 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_login"
@@ -39,9 +43,6 @@
             android:theme="@style/AppThemeSettings" />
         <activity android:name=".AddOrUpdateItem" />
         <activity android:name=".ItemDetailsActivity" />
-        <activity android:name=".StepTest" />
-        <activity android:name=".CustomStepActivity" />
-
     </application>
 
 </manifest>

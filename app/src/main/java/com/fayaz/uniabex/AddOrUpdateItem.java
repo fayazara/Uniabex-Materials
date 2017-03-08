@@ -30,11 +30,11 @@ public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelected
 
     Button bOK,bCancel;
     Item item;
-    int position;
+    int position, sPosition;
     EditText iName,iPono,iQty,iSupplier,iContact,iTranport,iLrno,iRemarks;
     CoordinatorLayout cl;
     public Spinner spinner;
-    String status, selectedStatus;
+    String status, selectedStatus, setStatus;;
     public ArrayAdapter<String> dataAdapter;
 
 
@@ -51,7 +51,7 @@ public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelected
 
         final Intent intent = new Intent(AddOrUpdateItem.this, MainActivity.class);
 
-         iName= (EditText) findViewById(R.id.iName);
+        iName= (EditText) findViewById(R.id.iName);
         iPono = (EditText) findViewById(R.id.iPoNo);
         iQty = (EditText) findViewById(R.id.iQty);
         iSupplier = (EditText) findViewById(R.id.iSupplier);
@@ -68,9 +68,9 @@ public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelected
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("Enquiry");
-        categories.add("Quotation");
-        categories.add("Po Rel");
+        categories.add("Enquiry Sent");
+        categories.add("Quotation Received");
+        categories.add("Po Released");
         categories.add("Dispatched");
         categories.add("Received");
 
@@ -100,29 +100,30 @@ public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelected
             @Override
             public void onClick(View v) {
 
-                    String test = iRemarks.getText().toString();
-                    Item i = new Item();
-                    i.setItem(iName.getText().toString());
-                    i.setPonum(iPono.getText().toString());
-                    i.setQty(iQty.getText().toString());
-                    i.setSupplier(iSupplier.getText().toString());
-                    i.setContact(iContact.getText().toString());
-                    i.setTransporter(iTranport.getText().toString());
-                    i.setLrnum(iQty.getText().toString());
-                    i.setStatus(selectedStatus);
+                String test = iRemarks.getText().toString();
+                Item i = new Item();
+                i.setItem(iName.getText().toString());
+                i.setPonum(iPono.getText().toString());
+                i.setQty(iQty.getText().toString());
+                i.setSupplier(iSupplier.getText().toString());
+                i.setContact(iContact.getText().toString());
+                i.setTransporter(iTranport.getText().toString());
+                i.setLrnum(iQty.getText().toString());
+                i.setStatus(status);
+                i.setRemarks(iRemarks.getText().toString() + "\n");
 
-                    if(test.equals("\n")){
-                        i.setRemarks(iRemarks.getText().toString());
-                    }
-                    else{
-                        i.setRemarks(iRemarks.getText().toString() + "\n");
-                    }
 
-                    if (item == null)
-                        MainActivity.getInstance().addItem(i);
-                    else
-                        MainActivity.getInstance().updateItemDetails(i, position);
-                        finish();
+                if (item == null){
+                    MainActivity.getInstance().addItem(i);
+                    startActivity(new Intent(AddOrUpdateItem.this, MainActivity.class));
+                }
+
+                else{
+                    MainActivity.getInstance().updateItemDetails(i, position);
+                    startActivity(new Intent(AddOrUpdateItem.this, MainActivity.class));
+                }
+
+
 
             }
         });
@@ -152,14 +153,26 @@ public class AddOrUpdateItem extends AppCompatActivity implements OnItemSelected
                         iTranport.setText(person.getTransporter());
                         iContact.setText(person.getContact());
                         iLrno.setText(person.getLrnum());
-                        spinner.setSelection(dataAdapter.getPosition(person.getStatus()));
 
-                        if(test.equals("\n")){
-                            iRemarks.setText(person.getRemarks());
+
+                        if(person.getStatus().equals("Enquiry Sent")){
+                            sPosition = 0;
                         }
-                        else{
-                            iRemarks.setText(person.getRemarks() + "\n");
+                        if(person.getStatus().equals("Quotation Received")){
+                            sPosition = 1;
                         }
+                        if(person.getStatus().equals("Po Released")){
+                            sPosition = 2;
+                        }
+                        if(person.getStatus().equals("Dispatched")){
+                            sPosition = 3;
+                        }
+                        if(person.getStatus().equals("Received")){
+                            sPosition = 4;
+                        }
+                        spinner.setSelection(sPosition);
+
+                        iRemarks.setText(person.getRemarks() + "\n");
                     }
 
                     @Override
